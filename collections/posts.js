@@ -14,7 +14,7 @@ Meteor.methods({
 	if (!postAttributes.title)
 	throw new Meteor.Error(422, 'Please fill in a headline');
 	    // check that there are no previous posts with the same link
-	    
+
 	if (postAttributes.url && postWithSameLink) { throw new Meteor.Error(302,
 	        'This link has already been posted',
 	        postWithSameLink._id);
@@ -25,6 +25,19 @@ Meteor.methods({
 		author: user.username,
 		submitted: new Date().getTime()
 	});
+
+	 // wait for 5 seconds
+	if (! this.isSimulation) {
+		var Future = Npm.require('fibers/future'); 
+		var future = new Future(); 
+		Meteor.setTimeout(function() {
+		  future.return(); 
+		}, 5 * 1000); 
+		future.wait();
+	}
+
 	var postId = Posts.insert(post);
-	return postId; }
-	});
+	
+	return postId; 
+	}
+});
