@@ -20,7 +20,7 @@ Meteor.methods({
 	        postWithSameLink._id);
 	}
 	    // pick out the whitelisted keys
-	var post = _.extend(_.pick(postAttributes, 'url', 'title', 'message'), { 
+var post = _.extend(_.pick(postAttributes, 'url', 'title', 'message'), { 
 		title: postAttributes.title + (this.isSimulation ? '(client)' : '(server)'
 	),		
 		userId: user._id,
@@ -38,7 +38,7 @@ Meteor.methods({
 		future.wait();
 	}	
 
-	var postId = Posts.insert(post);
+var postId = Posts.insert(post);
 	
 	return postId; 
 	}
